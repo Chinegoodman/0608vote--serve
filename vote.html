@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>我和天使有个约会</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+	<link rel="stylesheet" href="{CSS_PATH}angelvote/css/reset.css">
+	<link rel="stylesheet" href="{CSS_PATH}angelvote/css/samecss.css">
+	<link rel="stylesheet" href="{CSS_PATH}angelvote/css/index.css">
+	<script src="{CSS_PATH}angelvote/js/jquery.min.js"></script>
+	<script>
+		document.documentElement.style.fontSize = document.documentElement.clientWidth / 7.5  < 128/3 ? 128/3 : document.documentElement.clientWidth / 7.5 + 'px';
+		window.onresize = function(){
+			document.documentElement.style.fontSize = document.documentElement.clientWidth / 7.5  < 128/3 ? 128/3 : document.documentElement.clientWidth / 7.5 + 'px';
+		}
+		console.log(document.documentElement.style.fontSize);
+	</script>
+</head>
+<body>
+{pc:angelvote action="vote"}
+	<div id="appbox">
+
+		<!--<div id="title" class="clearfloat">
+			<a href=""><img src="{CSS_PATH}angelvote/images/goback.png" alt="goback"></a>
+			<div class="percenterlink">
+				<a href="percenter.html"><img src="{CSS_PATH}angelvote/images/percenter.png" alt="个人中心"></a>
+			</div>
+			<p class=" text-center text-grey255">2017.07.07我和天使有个约会</p>
+		</div>-->
+		<div id="zhutitop" class="clearfloat">
+			<div class="toplinks">
+				<a onclick="showfixedguizebox();" class="" href="javascript:void (0)"><img src="{CSS_PATH}angelvote/images/guize.png" alt="规则"></a>
+				<a onclick="showfixedjiangxiangbox()" class="" href="javascript:void (0)"><img src="{CSS_PATH}angelvote/images/jiangxiang.png" alt="奖项"></a>
+			</div>
+		</div>
+		<!--<div id="supportpoint" class="clearfloat">
+			<div class="supportpointsub floatleft text-grey255 text-center">
+				<p class="">主办单位</p>
+				<span>世界天使投资人大会</span>
+				<span>中国天使投资人学院</span>
+			</div>
+			<div class="supportpointsub floatleft text-grey255 text-center">
+				<p class="">主办单位</p>
+				<span>世界天使投资人大会</span>
+				<span>中国天使投资人学院</span>
+			</div>
+		</div>-->
+
+		<div id="tabbox">
+			<ul id="tabboxtitlelis" class="clearfloat">
+			<?php  $i = 0;?>
+			{loop $tdatas $t}
+				<li class="floatleft tabboxtitle"onclick="seltype({$t['id']},<?php echo $i; ?>)" data_status="{$t['status']}">{$t['name']}</li>
+			<?php $i++; ?>
+			{/loop}
+			</ul>
+			<!--<p class="tabtips font13">( 排名不分先后 )</p>-->
+			<div class="tabboxcontents show" id="content">
+
+			 
+			 	{loop $datas $r}
+				<div class="tabcontentli clearfloat">
+					<a class="percenterlislink floatleft" href="{APP_PATH}index.php?m=angelvote&c=index&a=entries&id={$r[id]}">
+						<div class="tabcontentlicode floatleft  text-grey255 text-center"><p class="text-center">{$r['id']}</p>号</div>
+						<div class="tabcontentliheaderpic floatleft">
+							<img src="{$r['picture']}" alt="">
+						</div>
+						<div class="tabcontentlicontent floatleft">
+							<p class="tabcontentliname floatleft ">{$r['name']}</p>
+							<!--<a class="tabcontentlilink floatleft font12" href="">了解TA</a>-->
+							<div class="tabcontentlisupportnumber">
+								{$r['poll']}
+							</div>
+						</div>
+					</a>
+					<div class="tabcontentlibtn  vote" data_id="{$r['id']}">支持TA</div>
+				</div>
+				{/loop}
+			</div>
+
+		</div>
+
+		<div id="wechat" class="clearfloat">
+			<div class="wechatimgbox floatleft">
+				<p class="text-center">天使投资人学院</p>
+				<p class="text-center">联系人</p>
+				<img src="{CSS_PATH}angelvote/images/weixinhao1.png" alt="微信公众号">
+			</div>
+			<div class="wechatimgbox floatleft">
+				<p class="text-center">天使投资人学院</p>
+				<p class="text-center">大会活动</p>
+				<img src="{CSS_PATH}angelvote/images/weixinhao2.png" alt="微信公众号">
+			</div>
+		</div>
+
+		<!--浮动按钮-->
+		<div id="fixedbtns">
+			<a class="callphone" href="tel:9527" title="拨打电话">
+				<img src="{CSS_PATH}angelvote/images/phone.png" alt="phone">
+			</a>
+			<a class="wirtepen" onclick="checkuser();" href="javascript:void (0)" title="报名">
+				<img src="{CSS_PATH}angelvote/images/wirtepen.png" alt="pen">
+			</a>
+			<a class="uptoappbox" href="#appbox" title="">
+				<img src="{CSS_PATH}angelvote/images/uptoappbox.png" alt="uptotop">
+			</a>
+		</div>
+
+		<!--登录弹出-->
+		<div id="fixedloginbox" class="fixedcontentbox">
+			<div class="fixedcontent" id="fixedlogin">
+				<p>请先绑定您的手机号码</p>
+				<form action="{APP_PATH}index.php?m=angelvote&c=index&a=login" method="post" id="myForm1">
+					<input class="fixedphone" type="text" placeholder="手机号码" name="mobile" >
+					<!--<input class="fixedsubmit" onclick="qdbaoming()" type="submit" value="确定">-->
+					<input class="fixedsubmit" type="submit" value="确定">
+				</form>
+				<div class="fixedtoptitle">
+					绑定手机
+				</div>
+				<div class="fixedtopclose" onclick="closefixedbox();">
+					<img src="{CSS_PATH}angelvote/images/closewhitebtn.png" alt="关闭">
+				</div>
+			</div>
+		</div>
+		<!--报名弹出-->
+		<div id="fixedbaomingbox" class="fixedcontentbox">
+			<div class="fixedcontent" id="fixedbaoming">
+				<p>如要报名，请先填写您的手机号码</p>
+				<form action="{APP_PATH}index.php?m=angelvote&c=index&a=login" method="post" id="myForm2">
+					<!--<input class="fixedphone" type="text" placeholder="手机号码" name="mobile">-->
+					<input class="fixedphone" type="text" placeholder="手机号码" name="mobile">
+					<!--<input class="fixedsubmit" onclick="qdbaoming()" type="submit" value="确定">-->
+					<input class="fixedsubmit" type="submit" value="确定">
+				</form>
+				<div class="fixedtoptitle">
+					我要报名
+				</div>
+				<div class="fixedtopclose" onclick="closefixedbox();">
+					<img src="{CSS_PATH}angelvote/images/closewhitebtn.png" alt="关闭">
+				</div>
+			</div>
+		</div>
+		<!--活动规则弹出-->
+		<div id="fixedguizebox" class="fixedcontentbox">
+			<div class="fixedcontent">
+				<p class="first">活动规则</p>
+				<ul class="huodongguize">
+					<li>上传1张自己和投资人或创业者的合影；</li>
+					<li>写下你与投资人故事/投资的故事；</li>
+					<li>写下最想见到的投资人或创业者。</li>
+				</ul>
+				<p>投票规则</p>
+				<div class="toupiaoguize">
+					每人每天最多可投7票，同一人只能投1票。<br>
+					投票平台设置严格加密机制，有效杜绝任何刷票行为，确保投票真实、有效。
+				</div>
+				<p>活动日期</p>
+				<div class="huodongriqi">
+					第一阶段：6月7日-6月13日<br>
+					第二阶段：6月14日-6月20日<br>
+					第三阶段：6月21日-7月2日<br>
+					7月3日公布结果
+				</div>
+
+				<div class="seenandclose" onclick="closefixedbox();">确定</div>
+
+
+				<div class="fixedtoptitle">
+					我要报名
+				</div>
+				<div class="fixedtopclose" onclick="closefixedbox();">
+					<img src="{CSS_PATH}angelvote/images/closewhitebtn.png" alt="关闭">
+				</div>
+			</div>
+		</div>
+		<!--奖项弹出-->
+		<div id="fixedjiangxiangbox" class="fixedcontentbox">
+			<div class="fixedcontent">
+				<ul class="huodongguize">
+					<li>三周票数总冠军30000门票一张；</li>
+					<li>每周总冠军19800门票一张；</li>
+					<li>票数达到7票时赠送200元优惠码，
+						3980-30000 可用；</li>
+					<li>票数达到77票时赠送500元优惠码，
+						3980-30000 可用；</li>
+					<li>票数达到777票时赠送1000元优惠码，
+						9800-30000 可用；</li>
+					<li>票数达到7777赠送5000元优惠码，
+						30000 门票可用；</li>
+					<li>第三阶段每天当天增长票数最高者赠送1000
+						元优惠码，第二名送700元。</li>
+				</ul>
+				<div class="seenandclose" onclick="closefixedbox();">确定</div>
+
+				<div class="fixedtoptitle">
+					奖项设置
+				</div>
+				<div class="fixedtopclose" onclick="closefixedbox();">
+					<img src="{CSS_PATH}angelvote/images/closewhitebtn.png" alt="关闭">
+				</div>
+			</div>
+		</div>
+
+		<!--投票成功弹出-->
+		<div id="fixedsuccessbox" class="fixedcontentbox">
+			<div class="fixedcontent fixedsuccesscontent">
+				<div class="fixedcontentdetails clearfloat">
+					<img src="{CSS_PATH}angelvote/images/successgreen.png" alt="成功">
+					<span>投票成功</span>
+				</div>
+				<div class="fixedtopclose" onclick="closefixedbox();">
+					<img src="{CSS_PATH}angelvote/images/closewhitebtn.png" alt="关闭">
+				</div>
+			</div>
+		</div>
+
+		<!--禁止多次投票弹出-->
+		<div id="fixednoallowbox" class="fixedcontentbox">
+			<div class="fixedcontent fixednoallowcontent">
+				<div class="fixedcontentdetails clearfloat text-center">
+					每人每天最多可投7票，同一人只能投1票，您今天已经为此位参赛者投过票
+				</div>
+				<div class="fixedtopclose" onclick="closefixedbox();">
+					<img src="{CSS_PATH}angelvote/images/closewhitebtn.png" alt="关闭">
+				</div>
+			</div>
+		</div>
+
+
+	<script src="{CSS_PATH}angelvote/js/index.js"></script>
+	<script src="{CSS_PATH}angelvote/js/atomaodian.js"></script>
+	<script src="{CSS_PATH}angelvote/js/jquery-form.js"></script>
+	<script>
+	  $("#myForm1").submit(function () {
+        	$(this).ajaxSubmit(function (data) {
+        		var ret=eval("(" + data+ ")");  //将返回的字符串data转换为json格式
+        		if(ret.code){
+        			closefixedbox();
+        			$('#fixednoallowbox .fixedcontentdetails').html(ret.msg);
+					noallowtips();
+					setTimeout(function () {
+						$('#fixednoallowbox').removeClass('show');
+					},1000)
+        		} else {
+        			alert(ret.msg);
+        		}
+        	});
+       		return false;
+     	});
+	   $("#myForm2").submit(function () {
+        	$(this).ajaxSubmit(function (data) {
+        		var ret=eval("(" + data+ ")");  //将返回的字符串data转换为json格式
+	    		if(ret.code){
+	    			window.location.href = "http://www.9fat.com/index.php?m=angelvote&c=index&a=enroll";
+	    		} else {
+	    			alert(ret.msg);
+	    		}
+        	});
+       		return false;
+     	});
+	</script>
+	<script>
+		var status = $('.select').attr("data_status");
+		if(status == 1){
+//			alert('红色可点击');
+			$('.tabcontentlibtn').removeClass('cantclick');
+//			$('.tabcontentlibtn').live('click');
+		}
+		if (status == 2){
+			// 未开始
+//			alert('灰色不可点击');
+			$('.tabcontentlibtn').die("click").addClass('cantclick');
+//			$('.tabcontentlibtn').addClass('cantclick');
+		}
+		if (status == 3){
+			// 已结束
+//			alert('灰色不可点');
+			$('.vote').die("click").addClass('cantclick');
+//			$('.tabcontentlibtn').addClass('cantclick');
+		}
+		$(function () {
+			$('.tabboxtitle').eq(0).addClass('select');
+		})
+
+
+
+		tabboxtitleclickfun(0);
+//		voteclickfun();
+
+		function checkuser(){
+			$.ajax({
+				type:"post",
+				url:"{APP_PATH}index.php?m=angelvote&c=index&a=userinfo",
+				data:{dosubmit:1},
+				async:false,
+				dataType:"json",
+				success(data){
+					if(data.status){
+						uid = data.uid;
+						window.location.href = "http://www.9fat.com/index.php?m=angelvote&c=index&a=enroll";
+					} else {
+//						alert(data.msg)
+						showfixedbaomingbox();
+					}
+				}
+			});
+		}
+
+
+
+		function tabboxtitleclickfun(ii) {
+			var status2 = $(".tabboxtitle").eq(ii).attr("data_status");
+			if(status2 == 1){
+				$('.tabcontentlibtn').removeClass('cantclick');
+
+				voteclickfun();
+			}
+			if(status2 == 2){
+				$('.tabcontentlibtn').addClass('cantclick');
+
+				$('.vote').die("click");
+			}
+			if(status2 == 3){
+				$('.tabcontentlibtn').addClass('cantclick');
+
+				$('.vote').die("click");
+			}
+
+			$(".tabboxtitle").live('click',function(){
+				// alert(status);
+				if(status2 == 1){
+//			alert('红色可点击');
+					voteclickfun();
+				}
+				if (status2 == 2){
+					// 未开始
+//				alert('灰色不可点击');
+					$('.vote').die("click");
+//				$('.tabcontentlibtn').addClass('cantclick');
+				}
+				if (status2 == 3){
+					// 已结束
+//				alert('灰色不可点');
+					$('.vote').die("click");
+//				$('.tabcontentlibtn').addClass('cantclick');
+				}
+			})
+		}
+
+
+		function voteclickfun() {
+			$(".vote").live('click',function(){
+				var uid = '';
+				var id = $(this).attr("data_id");
+				$.ajax({
+					type:"post",
+					url:"{APP_PATH}index.php?m=angelvote&c=index&a=userinfo",
+					data:{dosubmit:1},
+					async:false,
+					dataType:"json",
+					success(data){
+						if(data.status){
+							uid = data.uid;
+
+							votefun(id,uid);
+						} else {
+//						alert(data.msg)
+							showfixedloginbox();
+						}
+					}
+				});
+			})
+		}
+		function votefun(id,uid) {
+			var id = id;
+			var uid = uid;
+			$.ajax({
+				type:"post",
+				url:"{APP_PATH}index.php?m=angelvote&c=index&a=vote_edit",
+				data:{id:id,uid:uid},
+				async:true,
+				dataType:"json",
+				success(data){
+					if(data.code){
+						toupiaochenggong();
+					} else {
+//							alert(data.msg);
+						$('#fixednoallowbox .fixedcontentdetails').html(data.msg);
+						noallowtips();
+						setTimeout(function () {
+							$('#fixednoallowbox').removeClass('show');
+						},1000)
+					}
+				}
+			});
+
+		}
+		function seltype(type,ii){
+			var type = type;
+//			alert(type);
+
+			$.ajax({
+				type:"post",
+				url:"{APP_PATH}index.php?m=angelvote&c=index&a=type",
+				data:{type:type},
+				async:true,
+				dataType:"json",
+				success(data){
+					var strs = '';
+					for (var i = 0; i < data.length; i++) {
+						var str = '<div class="tabcontentli clearfloat"><a class="percenterlislink floatleft" href="http://www.9fat.com/index.php?m=angelvote&c=index&a=entries&id='+data[i].id+'"><div class="tabcontentlicode floatleft text-grey255 text-center"><p class="text-center">'+data[i].id+'</p>号</div><div class="tabcontentliheaderpic floatleft"><img src="'+data[i].picture+'" alt=""></div><div class="tabcontentlicontent floatleft"><p class="tabcontentliname floatleft ">'+data[i].name+'</p><div class="tabcontentlisupportnumber ">'+data[i].poll+'</div></div></a><div class="tabcontentlibtn  vote" data_id='+data[i].id+'">支持TA</div></div>';
+					strs +=str;
+					};
+
+
+		            $('#content').html(strs);
+
+					tabboxtitleclickfun(ii);
+					
+				}
+			});
+			// $.post("{APP_PATH}index.php?m=angelvote&c=index&a=type",{type:type},function(data){
+   //  			alert(data.str);
+  	// 		});
+		}
+	</script>
+</body>
+</html>
